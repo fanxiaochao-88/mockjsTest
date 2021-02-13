@@ -1,28 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h2>mockjs模拟数据</h2>
+    <button @click='getGoods'>获取商品列表</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import axios from 'axios'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  export default {
+    name: 'App',
+    components: {
+    },
+    mounted() {
+      axios.interceptors.response.use(res => {
+        return res.data
+      }, err => {
+        console.log(err);
+      })
+    },
+    methods: {
+      getGoods() {
+        axios({
+          url: '/api/goodlist'
+        }).then(res => {
+          console.log(res);
+        })
+      }
+    },
   }
-}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
